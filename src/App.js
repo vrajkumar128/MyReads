@@ -23,18 +23,24 @@ class App extends React.Component {
     const allBooks = await BooksAPI.getAll();
     this.setState({
       allBooks: allBooks
-    })
+    });
 
     // Sort allBooks onto their respective bookshelves
     this.state.allBooks.forEach(book => {
       if (book.shelf === 'currentlyReading') {
-        this.state.booksCurrentlyReading.push(book);
+        this.setState({
+          booksCurrentlyReading: this.state.booksCurrentlyReading.concat([book])
+        });
       } else if (book.shelf === 'wantToRead') {
-        this.state.booksWantToRead.push(book);
+        this.setState({
+          booksWantToRead: this.state.booksWantToRead.concat([book])
+        });
       } else {
-        this.state.booksRead.push(book);
+        this.setState({
+          booksRead: this.state.booksRead.concat([book])
+        });
       }
-    })
+    });
 
     console.log(this.state);
   }
@@ -55,7 +61,7 @@ class App extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
+                <input type="text" placeholder="Search by title or author" />
 
               </div>
             </div>

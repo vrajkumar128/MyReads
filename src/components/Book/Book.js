@@ -5,7 +5,7 @@ export const Book = props => {
 
   // Update App.js' state with book's new shelf
   const handleChange = e => {
-    props.updateShelf(e.target.value);
+    props.onChange(e.target.value);
   }
 
   return (
