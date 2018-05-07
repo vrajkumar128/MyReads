@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 
 export class BookList extends React.Component {
   render() {
-    console.log(this.props.books);
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
           {this.props.books.map(book => (
-            <li>
-             <Book />
+            <li key={book.id}>
+             <Book
+               book={book}
+               backgroundImageUrl={book.imageLinks.thumbnail}
+               title={book.title}
+               authors={book.authors}
+               />
             </li>
           ))}
         </ol>
