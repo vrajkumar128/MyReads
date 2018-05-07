@@ -9,12 +9,13 @@ export class BookList extends React.Component {
         <ol className="books-grid">
           {this.props.books.map(book => (
             <li key={book.id}>
-             <Book
-               book={book}
-               backgroundImageUrl={book.imageLinks.thumbnail}
-               title={book.title}
-               authors={book.authors}
-               />
+              <Book
+                book={book}
+                shelf={book.shelf}
+                backgroundImageUrl={book.imageLinks.thumbnail}
+                title={book.title}
+                authors={book.authors}
+              />
             </li>
           ))}
         </ol>

@@ -13,7 +13,7 @@ export const Book = props => {
       <div className="book-top">
         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.backgroundImageUrl})` }}></div>
         <div className="book-shelf-changer">
-          <select onChange={handleChange}>
+          <select defaultValue={props.shelf} onChange={handleChange}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -30,6 +30,7 @@ export const Book = props => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
+  shelf: PropTypes.string.isRequired,
   backgroundImageUrl: PropTypes.string,
   title: PropTypes.string.isRequired,
   authors: PropTypes.array.isRequired
