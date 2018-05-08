@@ -7,18 +7,17 @@ export class BookList extends React.Component {
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {this.props.books.map(book => (
+          {this.props.books.length ? this.props.books.map(book => (
             <li key={book.id}>
               <Book
                 book={book}
                 shelf={book.shelf}
-                backgroundImageUrl={book.imageLinks.thumbnail}
                 title={book.title}
                 authors={book.authors}
                 onChange={this.props.onChange}
               />
             </li>
-          ))}
+          )) : <span>No search results</span>}
         </ol>
       </div>
     )
@@ -26,5 +25,5 @@ export class BookList extends React.Component {
 }
 
 BookList.propTypes = {
-  books: PropTypes.array.isRequired
+  books: PropTypes.array
 }

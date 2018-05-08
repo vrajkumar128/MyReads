@@ -11,7 +11,7 @@ export const Book = props => {
   return (
     <div className="book">
       <div className="book-top">
-        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.backgroundImageUrl})` }}></div>
+        {props.book.imageLinks ? <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div> : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>}
         <div className="book-shelf-changer">
           <select defaultValue={props.shelf} onChange={handleChange}>
             <option value="none" disabled>Move to...</option>
@@ -23,7 +23,7 @@ export const Book = props => {
         </div>
       </div>
       <div className="book-title">{props.title}</div>
-      <div className="book-authors">{props.authors.join(' & ')}</div>
+      {props.authors ? <div className="book-authors">{props.authors.join(' & ')}</div> : <div className="book-authors">Unknown author</div>}
     </div>
   )
 }
@@ -31,7 +31,7 @@ export const Book = props => {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   backgroundImageUrl: PropTypes.string,
-  shelf: PropTypes.string.isRequired,
+  shelf: PropTypes.string,
   title: PropTypes.string.isRequired,
-  authors: PropTypes.array.isRequired
+  authors: PropTypes.array
 }
