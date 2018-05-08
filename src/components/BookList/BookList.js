@@ -15,6 +15,7 @@ export class BookList extends React.Component {
                 backgroundImageUrl={book.imageLinks.thumbnail}
                 title={book.title}
                 authors={book.authors}
+                onChange={this.props.onChange}
               />
             </li>
           ))}

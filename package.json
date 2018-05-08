@@ -4,13 +4,16 @@
     "react-dom": "^16.3.2"
   },
   "devDependencies": {
-    "react-scripts": "1.1.4",
-    "prop-types": "^15.6.1"
+    "gh-pages": "^1.1.0",
+    "prop-types": "^15.6.1",
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "eject": "react-scripts eject",
+    "deploy": "yarn build && gh-pages -d build"
+  },
+  "homepage": "https://vrrajkum.github.io/MyReads"
 }

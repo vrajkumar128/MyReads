@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 export const Book = props => {
 
-  // Update App.js' state with book's new shelf
+  // Move book to selected shelf
   const handleChange = e => {
-    props.onChange(e.target.value);
+    props.onChange(props.book, e.target.value);
   }
 
   return (
@@ -30,8 +30,8 @@ export const Book = props => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  shelf: PropTypes.string.isRequired,
   backgroundImageUrl: PropTypes.string,
+  shelf: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   authors: PropTypes.array.isRequired
 }

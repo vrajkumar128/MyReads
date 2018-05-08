@@ -6,9 +6,6 @@ import './App.css';
 class App extends React.Component {
   state = {
     allBooks: [],
-    booksCurrentlyReading: [],
-    booksWantToRead: [],
-    booksRead: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -18,33 +15,29 @@ class App extends React.Component {
     showSearchPage: false
   }
 
+  // Update state with all books currently in collection
   async componentDidMount() {
-    // Update state with all books currently in collection
     const allBooks = await BooksAPI.getAll();
     this.setState({
       allBooks: allBooks
     });
+  }
 
-    // Sort allBooks onto their respective bookshelves
-    this.state.allBooks.forEach(book => {
-      if (book.shelf === 'currentlyReading') {
-        this.setState({
-          booksCurrentlyReading: this.state.booksCurrentlyReading.concat([book])
-        });
-      } else if (book.shelf === 'wantToRead') {
-        this.setState({
-          booksWantToRead: this.state.booksWantToRead.concat([book])
-        });
-      } else {
-        this.setState({
-          booksRead: this.state.booksRead.concat([book])
-        });
-      }
+  // Move book to a different shelf
+  updateShelf = (book, shelf) => {
+    book.shelf = shelf;
+    BooksAPI.update(book, shelf);
+    this.setState({
+      // Filter the old version of the book out of allBooks and then concatenate the new version of the book
+      allBooks: this.state.allBooks.filter(allBook => allBook.id !== book.id).concat([book])
     });
-    console.log(this.state);
   }
 
   render() {
+    const booksCurrentlyReading = this.state.allBooks.filter(book => book.shelf === 'currentlyReading');
+    const booksWantToRead = this.state.allBooks.filter(book => book.shelf === 'wantToRead');
+    const booksRead = this.state.allBooks.filter(book => book.shelf === 'read');
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -76,15 +69,15 @@ class App extends React.Component {
               <div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
-                  <BookList books={this.state.booksCurrentlyReading} />
+                  <BookList books={booksCurrentlyReading} onChange={this.updateShelf} />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
-                  <BookList books={this.state.booksWantToRead} />
+                  <BookList books={booksWantToRead} onChange={this.updateShelf} />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
-                  <BookList books={this.state.booksRead} />
+                  <BookList books={booksRead} onChange={this.updateShelf} />
                 </div>
               </div>
             </div>
