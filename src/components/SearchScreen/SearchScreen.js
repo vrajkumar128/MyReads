@@ -10,7 +10,9 @@ export class SearchScreen extends React.Component {
         <SearchBar query={this.props.query} updateQuery={this.props.updateQuery} onChange={this.props.search} clearResults={this.props.clearResults} />
         <div className="search-books-results">
           <ol className="books-grid">
-            <BookList books={this.props.searchResults} updateShelf={this.props.updateShelf} />
+            {this.props.searchResults.length ?
+            <BookList books={this.props.searchResults} allBooks={this.props.allBooks} updateShelf={this.props.updateShelf} /> :
+            <span>No search results</span>}
           </ol>
         </div>
       </div>
@@ -24,5 +26,6 @@ SearchScreen.propTypes = {
   search: PropTypes.func.isRequired,
   clearResults: PropTypes.func.isRequired,
   searchResults: PropTypes.array.isRequired,
+  allBooks: PropTypes.array.isRequired,
   updateShelf: PropTypes.func.isRequired
 }

@@ -11,13 +11,14 @@ export class BookList extends React.Component {
             <li key={book.id}>
               <Book
                 book={book}
-                shelf={book.shelf}
+                allBooks={this.props.allBooks}
                 title={book.title}
                 authors={book.authors}
                 onChange={this.props.updateShelf}
               />
             </li>
-          )) : <span>No search results</span>}
+          ))
+          : null}
         </ol>
       </div>
     )
@@ -26,5 +27,6 @@ export class BookList extends React.Component {
 
 BookList.propTypes = {
   books: PropTypes.array.isRequired,
+  allBooks: PropTypes.array,
   updateShelf: PropTypes.func.isRequired
 }

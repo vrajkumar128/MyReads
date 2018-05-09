@@ -13,6 +13,7 @@ class App extends React.Component {
       query: '',
       searchResults: []
     }
+
     this.search = this.search.bind(this);
   }
 
@@ -26,12 +27,19 @@ class App extends React.Component {
 
   // Move book to a different shelf
   updateShelf = (book, shelf) => {
-    book.shelf = shelf;
     BooksAPI.update(book, shelf);
-    this.setState({
-      // Filter the old version of the book out of allBooks and then concatenate the new version of the book
-      allBooks: this.state.allBooks.filter(allBook => allBook.id !== book.id).concat([book])
-    });
+    book.shelf = shelf;
+    if (shelf === 'none') {
+      this.setState({
+        // Filter the old version of the book out of allBooks
+        allBooks: this.state.allBooks.filter(allBook => allBook.id !== book.id)
+      });
+    } else {
+      this.setState({
+        // Filter the old version of the book out of allBooks and then concatenate the new version of the book
+        allBooks: this.state.allBooks.filter(allBook => allBook.id !== book.id).concat([book])
+      });
+    }
   }
 
   // Update state with new query
@@ -44,7 +52,6 @@ class App extends React.Component {
   // Update state with search results
   async search(query) {
     const searchResults = await BooksAPI.search(query);
-    console.log(searchResults);
     this.setState({
       searchResults: searchResults
     });
@@ -73,15 +80,24 @@ class App extends React.Component {
               <div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
-                  <BookList books={booksCurrentlyReading} updateShelf={this.updateShelf} />
+                  <BookList
+                    books={booksCurrentlyReading}
+                    updateShelf={this.updateShelf}
+                  />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
-                  <BookList books={booksWantToRead} updateShelf={this.updateShelf} />
+                  <BookList
+                    books={booksWantToRead}
+                    updateShelf={this.updateShelf}
+                  />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
-                  <BookList books={booksRead} updateShelf={this.updateShelf} />
+                  <BookList
+                    books={booksRead}
+                    updateShelf={this.updateShelf}
+                  />
                 </div>
               </div>
             </div>
@@ -91,7 +107,15 @@ class App extends React.Component {
           </div>
         )} />
         <Route exact path="/search" render={() => (
-          <SearchScreen query={this.state.query} searchResults={this.state.searchResults} updateQuery={this.updateQuery} search={this.search} updateShelf={this.updateShelf} clearResults={this.clearResults} />
+          <SearchScreen
+            query={this.state.query}
+            searchResults={this.state.searchResults}
+            updateQuery={this.updateQuery}
+            search={this.search}
+            allBooks={this.state.allBooks}
+            updateShelf={this.updateShelf}
+            clearResults={this.clearResults}
+          />
         )} />
       </div>
     )

@@ -13,8 +13,15 @@ export const Book = props => {
       <div className="book-top">
         {props.book.imageLinks ? <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div> : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>}
         <div className="book-shelf-changer">
-          {props.shelf ? (
-            <select defaultValue={props.shelf} onChange={handleChange}> : }
+          {// Test if a search result is already in the collection, and if so set the search result's shelf to match
+          props.allBooks && props.allBooks.forEach(allBook => {
+            if (allBook.id === props.book.id) {
+              props.book.shelf = allBook.shelf;
+              return;
+            }
+          })}
+          {props.book.shelf ? (
+            <select defaultValue={props.book.shelf} onChange={handleChange}> : }
               <option disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -40,8 +47,7 @@ export const Book = props => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  backgroundImageUrl: PropTypes.string,
-  shelf: PropTypes.string,
+  allBooks: PropTypes.array,
   title: PropTypes.string.isRequired,
   authors: PropTypes.array
 }
