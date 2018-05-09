@@ -1,42 +1,16 @@
 import React from 'react';
-import * as BooksAPI from '../../utils/BooksAPI';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { BookList } from '../BookList/BookList';
 import PropTypes from 'prop-types';
 
 export class SearchScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: '',
-      searchResults: []
-    }
-
-    this.search = this.search.bind(this);
-  }
-
-  // Update state with search results
-  async search(query) {
-    const searchResults = await BooksAPI.search(query);
-    this.setState({
-      searchResults: searchResults
-    });
-  }
-
-  // Clear search results
-  clearResults = () => {
-    this.setState({
-      searchResults: []
-    });
-  }
-
   render() {
     return(
       <div className="search-books">
-        <SearchBar onChange={this.search} clearResults={this.clearResults} />
+        <SearchBar query={this.props.query} updateQuery={this.props.updateQuery} onChange={this.props.search} clearResults={this.props.clearResults} />
         <div className="search-books-results">
           <ol className="books-grid">
-            <BookList books={this.state.searchResults} />
+            <BookList books={this.props.searchResults} updateShelf={this.props.updateShelf} />
           </ol>
         </div>
       </div>
@@ -45,5 +19,10 @@ export class SearchScreen extends React.Component {
 }
 
 SearchScreen.propTypes = {
-
+  query: PropTypes.string,
+  updateQuery: PropTypes.func.isRequired,
+  search: PropTypes.func.isRequired,
+  clearResults: PropTypes.func.isRequired,
+  searchResults: PropTypes.array.isRequired,
+  updateShelf: PropTypes.func.isRequired
 }

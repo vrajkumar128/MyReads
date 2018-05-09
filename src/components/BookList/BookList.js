@@ -14,7 +14,7 @@ export class BookList extends React.Component {
                 shelf={book.shelf}
                 title={book.title}
                 authors={book.authors}
-                onChange={this.props.onChange}
+                onChange={this.props.updateShelf}
               />
             </li>
           )) : <span>No search results</span>}
@@ -25,5 +25,6 @@ export class BookList extends React.Component {
 }
 
 BookList.propTypes = {
-  books: PropTypes.array
+  books: PropTypes.array.isRequired,
+  updateShelf: PropTypes.func.isRequired
 }

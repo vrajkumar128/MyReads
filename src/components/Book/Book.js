@@ -13,13 +13,23 @@ export const Book = props => {
       <div className="book-top">
         {props.book.imageLinks ? <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div> : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>}
         <div className="book-shelf-changer">
-          <select defaultValue={props.shelf} onChange={handleChange}>
-            <option value="none" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
-          </select>
+          {props.shelf ? (
+            <select defaultValue={props.shelf} onChange={handleChange}> : }
+              <option disabled>Move to...</option>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+          ) : (
+            <select defaultValue="none" onChange={handleChange}>
+              <option disabled>Move to...</option>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+          )}
         </div>
       </div>
       <div className="book-title">{props.title}</div>

@@ -6,12 +6,13 @@ export const SearchBar = props => {
 
   // Search for results using search input
   const handleChange = e => {
+    props.updateQuery(e.target.value);
     e.target.value ? props.onChange(e.target.value) : props.clearResults();
   }
 
   return (
     <div className="search-books-bar">
-      <Link to="/" className="close-search" onClick={props.clearResults}>Close</Link>
+      <Link to="/" className="close-search">Close</Link>
       <div className="search-books-input-wrapper">
         {/*
           NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -28,6 +29,8 @@ export const SearchBar = props => {
 };
 
 SearchBar.propTypes = {
+  updateQuery: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  clearResults: PropTypes.func.isRequired
+  clearResults: PropTypes.func.isRequired,
+  query: PropTypes.string
 }
