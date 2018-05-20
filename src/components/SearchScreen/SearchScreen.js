@@ -7,12 +7,20 @@ export class SearchScreen extends React.Component {
   render() {
     return(
       <div className="search-books">
-        <SearchBar query={this.props.query} updateQuery={this.props.updateQuery} onChange={this.props.search} clearResults={this.props.clearResults} />
+        <SearchBar
+          query={this.props.query}
+          updateQuery={this.props.updateQuery}
+          onChange={this.props.search}
+          clearResults={this.props.clearResults}
+        />
         <div className="search-books-results">
           <ol className="books-grid">
             {this.props.searchResults.length ?
-            <BookList books={this.props.searchResults} allBooks={this.props.allBooks} updateShelf={this.props.updateShelf} /> :
-            <span>No search results</span>}
+            <BookList
+              books={this.props.searchResults}
+              allBooks={this.props.allBooks}
+              updateShelf={this.props.updateShelf}
+            /> : <span>No search results</span>}
           </ol>
         </div>
       </div>

@@ -6,16 +6,11 @@ import * as BooksAPI from './utils/BooksAPI';
 import './App.css';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       allBooks: [],
       query: '',
       searchResults: []
     }
-
-    this.search = this.search.bind(this);
-  }
 
   // Update state with all books currently in collection
   async componentDidMount() {
@@ -50,11 +45,9 @@ class App extends React.Component {
   }
 
   // Update state with search results
-  async search(query) {
+  search = async query => {
     const searchResults = await BooksAPI.search(query);
-    this.setState({
-      searchResults: searchResults
-    });
+    this.setState({ searchResults });
   }
 
   // Clear search results
@@ -80,24 +73,15 @@ class App extends React.Component {
               <div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
-                  <BookList
-                    books={booksCurrentlyReading}
-                    updateShelf={this.updateShelf}
-                  />
+                  <BookList books={booksCurrentlyReading} updateShelf={this.updateShelf} />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
-                  <BookList
-                    books={booksWantToRead}
-                    updateShelf={this.updateShelf}
-                  />
+                  <BookList books={booksWantToRead} updateShelf={this.updateShelf} />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
-                  <BookList
-                    books={booksRead}
-                    updateShelf={this.updateShelf}
-                  />
+                  <BookList books={booksRead} updateShelf={this.updateShelf} />
                 </div>
               </div>
             </div>
