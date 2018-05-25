@@ -25,7 +25,7 @@ export const SearchBar = props => {
         <input
           type="search"
           placeholder="Search by title or author"
-          value={props.query} 
+          value={props.query}
           onChange={handleChange}
         />
       </div>

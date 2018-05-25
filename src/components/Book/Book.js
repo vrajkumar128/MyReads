@@ -8,16 +8,27 @@ export const Book = props => {
     props.onChange(props.book, e.target.value);
   }
 
+  // If book has a cover image, display it; else display "No cover image"
+  const coverImage = () => props.book.imageLinks ?
+    <div className="book-cover" style={{ width: 128, height: 193, background: `url(${props.book.imageLinks.thumbnail}) center no-repeat`, backgroundSize: 'cover' }}></div>
+    : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>
+
+  // If a search result is already in the collection, set the search result's shelf to match; else set to 'none'
+  const defaultValue = () => props.allBooks && props.allBooks.find(allBook => allBook.id === props.book.id) ?
+    props.book.shelf = props.allBooks.find(allBook => allBook.id === props.book.id).shelf
+    : props.book.shelf = 'none'
+
+  // If a book's authors are known, display them joined by an ampersand; else display "Unknown author"
+  const authors = () => props.book.authors ?
+    <div className="book-authors">{props.book.authors.join(' & ')}</div>
+    : <div className="book-authors">Unknown author</div>
+
   return (
     <div className="book">
       <div className="book-top">
-        {props.book.imageLinks ? <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div> : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>}
+        {coverImage()}
         <div className="book-shelf-changer">
-          {// If a search result is already in the collection, set the search result's shelf to match; else set to 'none'
-          props.allBooks && (props.allBooks.find(allBook => allBook.id === props.book.id) ?
-          props.book.shelf = props.allBooks.find(allBook => allBook.id === props.book.id).shelf
-          : props.book.shelf = 'none')}
-          <select defaultValue={props.book.shelf} onChange={handleChange}>
+          <select defaultValue={defaultValue()} onChange={handleChange}>
             <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -26,8 +37,8 @@ export const Book = props => {
           </select>
         </div>
       </div>
-      <div className="book-title">{props.title}</div>
-      {props.authors ? <div className="book-authors">{props.authors.join(' & ')}</div> : <div className="book-authors">Unknown author</div>}
+      <div className="book-title">{props.book.title}</div>
+      {authors()}
     </div>
   )
 }
@@ -35,6 +46,5 @@ export const Book = props => {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   allBooks: PropTypes.array,
-  title: PropTypes.string.isRequired,
-  authors: PropTypes.array
+  onChange: PropTypes.func.isRequired
 }

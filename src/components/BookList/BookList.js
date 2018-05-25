@@ -12,8 +12,6 @@ export class BookList extends React.Component {
               <Book
                 book={book}
                 allBooks={this.props.allBooks}
-                title={book.title}
-                authors={book.authors}
                 onChange={this.props.updateShelf}
               />
             </li>

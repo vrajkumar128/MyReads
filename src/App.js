@@ -36,10 +36,8 @@ class App extends React.Component {
   }
 
   // Update state with new query
-  updateQuery = newQuery => {
-    this.setState({
-      query: newQuery
-    });
+  updateQuery = query => {
+    this.setState({ query });
   }
 
   // Update state with search results
