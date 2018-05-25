@@ -1,5 +1,6 @@
 import React from 'react';
 import { Book } from '../Book/Book';
+import loader from '../../icons/loader.gif';
 import PropTypes from 'prop-types';
 
 export class BookList extends React.Component {
@@ -7,7 +8,8 @@ export class BookList extends React.Component {
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {this.props.books.length ? this.props.books.map(book => (
+          {// If response from server has been received, render any books on the shelf; else show a loading spinner
+          this.props.responseReceived ? this.props.books.length && this.props.books.map(book => (
             <li key={book.id}>
               <Book
                 book={book}
@@ -15,8 +17,7 @@ export class BookList extends React.Component {
                 onChange={this.props.updateShelf}
               />
             </li>
-          ))
-          : null}
+          )) : <img src={loader} alt="Loading spinner" />}
         </ol>
       </div>
     )
@@ -24,6 +25,7 @@ export class BookList extends React.Component {
 }
 
 BookList.propTypes = {
+  responseReceived: PropTypes.bool.isRequired,
   books: PropTypes.array.isRequired,
   allBooks: PropTypes.array,
   updateShelf: PropTypes.func.isRequired

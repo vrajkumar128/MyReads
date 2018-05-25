@@ -17,6 +17,7 @@ export class SearchScreen extends React.PureComponent {
           <ol className="books-grid">
             {this.props.searchResults.length ?
             <BookList
+              responseReceived={this.props.responseReceived}
               books={this.props.searchResults}
               allBooks={this.props.allBooks}
               updateShelf={this.props.updateShelf}
@@ -33,6 +34,7 @@ SearchScreen.propTypes = {
   updateQuery: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   clearResults: PropTypes.func.isRequired,
+  responseReceived: PropTypes.bool.isRequired,
   searchResults: PropTypes.array.isRequired,
   allBooks: PropTypes.array.isRequired,
   updateShelf: PropTypes.func.isRequired

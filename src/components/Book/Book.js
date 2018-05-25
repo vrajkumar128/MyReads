@@ -8,7 +8,7 @@ export const Book = props => {
     props.onChange(props.book, e.target.value);
   }
 
-  // If book has a cover image, display it; else display "No cover image"
+  // If a book has a cover image, display it; else display "No cover image"
   const coverImage = () => props.book.imageLinks ?
     <div className="book-cover" style={{ width: 128, height: 193, background: `url(${props.book.imageLinks.thumbnail}) center no-repeat`, backgroundSize: 'cover' }}></div>
     : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>
@@ -28,7 +28,7 @@ export const Book = props => {
       <div className="book-top">
         {coverImage()}
         <div className="book-shelf-changer">
-          <select defaultValue={defaultValue()} onChange={handleChange}>
+          <select defaultValue={props.book.shelf ? props.book.shelf : defaultValue()} onChange={handleChange}>
             <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
