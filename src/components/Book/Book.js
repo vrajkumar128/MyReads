@@ -14,8 +14,9 @@ export const Book = props => {
         {props.book.imageLinks ? <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div> : <div className="book-cover" style={{ width: 128, height: 193, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>No cover image</div>}
         <div className="book-shelf-changer">
           {// If a search result is already in the collection, set the search result's shelf to match; else set to 'none'
-          props.allBooks && (props.allBooks.find(allBook => allBook.id === props.book.id) ? props.book.shelf = props.allBooks.find(allBook => allBook.id === props.book.id).shelf : props.book.shelf = 'none')
-          }
+          props.allBooks && (props.allBooks.find(allBook => allBook.id === props.book.id) ?
+          props.book.shelf = props.allBooks.find(allBook => allBook.id === props.book.id).shelf
+          : props.book.shelf = 'none')}
           <select defaultValue={props.book.shelf} onChange={handleChange}>
             <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>

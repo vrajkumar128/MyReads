@@ -15,9 +15,7 @@ class App extends React.Component {
   // Update state with all books currently in collection
   async componentDidMount() {
     const allBooks = await BooksAPI.getAll();
-    this.setState({
-      allBooks: allBooks
-    });
+    this.setState({ allBooks });
   }
 
   // Move book to a different shelf
